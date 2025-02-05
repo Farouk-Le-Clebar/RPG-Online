@@ -20,6 +20,15 @@ World::World(std::size_t width, std::size_t height, unsigned int seed, SDL_Rende
     for (std::size_t i = 0; i < width; ++i) {
         _noiseMap[i].resize(height);
     }
+
+    _grassTexture = loadTexture("../src/assets/grass.png", renderer);
+    _sandTexture = loadTexture("../src/assets/sand.png", renderer);
+    _waterTexture = loadTexture("../src/assets/water.png", renderer);
+    _grassForestTexture = loadTexture("../src/assets/grass_forest.png", renderer);
+
+    loadGrassRocksTextures(renderer);
+    loadGrassLeafsTextures(renderer);
+    loadSandRocksTextures(renderer);
 }
 
 
@@ -27,6 +36,33 @@ World::~World()
 {
     std::cout << "DESTROY WORLD" << std::endl;
 }
+
+void World::loadGrassRocksTextures(SDL_Renderer* renderer) {
+    _grassRocksTextures.push_back(loadTexture("../src/assets/grass_rocks/grass_rock1.png", renderer));
+    _grassRocksTextures.push_back(loadTexture("../src/assets/grass_rocks/grass_rock2.png", renderer));
+    _grassRocksTextures.push_back(loadTexture("../src/assets/grass_rocks/grass_rock3.png", renderer));
+}
+
+void World::loadGrassLeafsTextures(SDL_Renderer* renderer) {
+    _grassLeafsTextures.push_back(loadTexture("../src/assets/grass_leafs/grass_leaf1.png", renderer));
+    _grassLeafsTextures.push_back(loadTexture("../src/assets/grass_leafs/grass_leaf2.png", renderer));
+    _grassLeafsTextures.push_back(loadTexture("../src/assets/grass_leafs/grass_leaf3.png", renderer));
+}
+
+void World::loadSandRocksTextures(SDL_Renderer* renderer) {
+    _sandRocksTextures.push_back(loadTexture("../src/assets/sand_rocks/sand_rock1.png", renderer));
+    _sandRocksTextures.push_back(loadTexture("../src/assets/sand_rocks/sand_rock2.png", renderer));
+    _sandRocksTextures.push_back(loadTexture("../src/assets/sand_rocks/sand_rock3.png", renderer));
+}
+
+SDL_Texture* World::loadTexture(const char* filepath, SDL_Renderer* renderer) {
+    SDL_Texture* texture = IMG_LoadTexture(renderer, filepath);
+    if (!texture) {
+        SDL_Log("Failed to load texture %s: %s", filepath, SDL_GetError());
+    }
+    return texture;
+}
+
 
 void World::generate() {
     generateBiome();
