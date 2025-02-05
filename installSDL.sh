@@ -1,39 +1,45 @@
 #!/bin/bash
 
-git clone git@github.com:libsdl-org/SDL.git
+set -e
 
-cd SDL
-cmake -S . -B build 
-cmake --build build
-sudo cmake --install build --prefix /usr/local
+modules=("SDL" "SDL_image" "SDL_ttf" "SDL_mixer" "SDL_net")
 
-cd ..
-git clone git@github.com:libsdl-org/SDL_image.git
-cd SDL_image
-cmake -S . -B build 
-cmake --build build
-sudo cmake --install build --prefix /usr/local
+for module in "${modules[@]}"; do
+    echo "🔄 Cloning repository: $module..."
+    git clone https://github.com/libsdl-org/$module.git
+    cd $module
 
-cd ..
-git clone git@github.com:libsdl-org/SDL_ttf.git
-cd SDL_ttf
-cmake -S . -B build 
-cmake --build build
-sudo cmake --install build --prefix /usr/local
+    echo "⚙️ Configuring CMake for $module..."
+    cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 
-cd ..
-git clone git@github.com:libsdl-org/SDL_mixer.git
-cd SDL_mixer
-cmake -S . -B build 
-cmake --build build
-sudo cmake --install build --prefix /usr/local
+    echo "🚀 Building $module..."
+    cmake --build build
 
-cd ..
-git clone git@github.com:libsdl-org/SDL_net.git
-cd SDL_net
-cmake -S . -B build 
-cmake --build build
-sudo cmake --install build --prefix /usr/local
+    echo "📦 Installing $module..."
+    sudo cmake --install build --prefix /usr/local
 
-cd ..
+    echo "✅ Checking installation of $module..."
+    if [ -f "/usr/local/lib/lib${module}.so" ] || [ -f "/usr/local/lib/lib${module}.a" ]; then
+        echo "✅ $module installed successfully!"
+    else
+        echo "❌ ERROR: $module does not seem to be installed correctly!"
+    fi
+
+    cd ..
+done
+
+echo "🧹 Removing source directories..."
 rm -rf SDL SDL_image SDL_ttf SDL_mixer SDL_net
+
+echo "🔍 Final verification of installed SDL libraries:"
+
+for module in "${modules[@]}"; do
+    echo -n "📌 $module: "
+    if ldconfig -p | grep -i "lib${module}.so" >/dev/null || [ -f "/usr/local/lib/lib${module}.so" ] || [ -f "/usr/local/lib/lib${module}.a" ]; then
+        echo "✅ Found"
+    else
+        echo "❌ Not found"
+    fi
+done
+
+echo "🎉 Installation completed successfully!"
