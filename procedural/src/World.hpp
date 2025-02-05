@@ -16,14 +16,15 @@
 #include <unordered_map>
 #include <noise/noise.h>
 
-#define TILE_SIZE 10
+#define TILE_SIZE 16
 
 
 enum class Biome { PLAINE, FORET, DESERT, RIVIERE, MONTAGNE, OCEAN };
 
-struct Tile {
-    Biome biome;
+struct TileInfo {
+    SDL_Texture* texture;
 };
+
 
 class World {
     public:
@@ -49,9 +50,16 @@ class World {
         std::vector<SDL_Texture*> _grassRocksTextures;
         std::vector<SDL_Texture*> _grassLeafsTextures;
         std::vector<SDL_Texture*> _sandRocksTextures;
+        std::vector<std::vector<TileInfo> > _tileTextures;
 
         SDL_Texture* _grassTexture;
         SDL_Texture* _sandTexture;
         SDL_Texture* _waterTexture;
         SDL_Texture* _grassForestTexture;
+
+        SDL_Texture* _treeTexture;
+        SDL_Texture* _smalltreeTexture;
+        SDL_Texture* _foresttreeTexture;
+        SDL_Texture* _forestsmalltreeTexture;
+
 };
