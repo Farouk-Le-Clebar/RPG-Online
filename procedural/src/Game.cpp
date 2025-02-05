@@ -39,7 +39,7 @@ void Game::run()
     keyType input = NONE;
 
     seed = static_cast<unsigned int>(time(nullptr));
-    World world(120, 80, seed, _window->getRenderer());
+    World world(300, 80, seed, _window->getRenderer());
     world.generate();
 
     while (event != CLOSE_WINDOW) {
