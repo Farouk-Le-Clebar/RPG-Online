@@ -14,6 +14,7 @@
 #include <iostream>
 #include <vector>
 #include <random>
+#include <unordered_map>
 
 #define TILE_SIZE 32
 

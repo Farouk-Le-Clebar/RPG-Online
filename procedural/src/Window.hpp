@@ -15,6 +15,7 @@
 #include <vector>
 #include <memory>
 #include <cstddef>
+#include <unordered_map>
 
 class Window {
     public:

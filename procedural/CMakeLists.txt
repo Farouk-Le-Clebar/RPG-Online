@@ -15,18 +15,16 @@ file(GLOB SOURCES_GAME "src/*.cpp")
 
 add_executable(proceduralX ${SOURCES_GAME})
 
-link_directories("/usr/local/lib/libnoise-static.a")
-
 include_directories("/usr/local/include/noise")
 
-target_link_libraries(proceduralX PRIVATE noise)
+target_link_libraries(proceduralX PRIVATE /usr/local/lib/libnoise-static.a)
+
 target_link_libraries(proceduralX PRIVATE SDL3::SDL3)
 target_link_libraries(proceduralX PRIVATE SDL3_ttf::SDL3_ttf)
 target_link_libraries(proceduralX PRIVATE SDL3_image::SDL3_image)
 target_link_libraries(proceduralX PRIVATE SDL3_mixer::SDL3_mixer)
 
 target_compile_definitions(proceduralX PRIVATE $<$<CONFIG:Debug>:DEBUG>)
-
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     message(STATUS "Building in Debug mode")
