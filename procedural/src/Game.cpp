@@ -49,6 +49,7 @@ void Game::run()
 
         moveCamera(input);
         world.render(_window->getRenderer(), _window->getCamera());
+        world.renderFeatures(_window->getRenderer(), _window->getCamera());
 
         // window system
         _window->render();
