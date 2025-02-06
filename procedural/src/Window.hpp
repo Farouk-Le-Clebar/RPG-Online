@@ -26,6 +26,7 @@ class Window {
         eventType updateEvents();
         keyType getInput();
         void moveCamera(int x, int y);
+        void zoomCamera(int zoom);
         void clearWindow();
         void render();
         SDL_Point getCamera() { return _camera; }

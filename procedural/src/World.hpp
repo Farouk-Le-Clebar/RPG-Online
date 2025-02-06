@@ -15,6 +15,7 @@
 #include <random>
 #include <unordered_map>
 #include <noise/noise.h>
+#include <cstdlib>
 
 #define TILE_SIZE 16
 #define TREE_SIZE 32
@@ -23,8 +24,9 @@
 enum class Biome { PLAINE, FORET, PLAGE, OCEAN };
 
 enum class Tree { NOTREE, TREE, SMALLTREE, FORESTTREE, SMALLFORESTTREE};
-enum class Bush { NOBUSH, BUSH };
 enum class Rock { NOROCK, SMALLROCK, ROCK, BIGROCK };
+
+enum class Hole { NOHOLE, SMALLSANDHOLE, SANDHOLE, BIGSANDHOLE, SMALLHOLE, HOLE, BIGHOLE };
 
 struct TileInfo {
     SDL_Texture* texture;
@@ -33,8 +35,8 @@ struct TileInfo {
 struct Tile {
     Biome biome;
     Tree tree;
-    Bush bush;
     Rock rock;
+    Hole hole;
 };
 
 
@@ -51,7 +53,7 @@ class World {
         void loadSandRocksTextures(SDL_Renderer* renderer);
         SDL_Texture* getTileTexture(Biome biome);
         SDL_Texture* getTreeTexture(Tree tree);
-        SDL_Texture* getBushTexture(Bush bush);
+        SDL_Texture* getHoleTexture(Hole hole);
         SDL_Texture* getRockTexture(Rock rock);
         SDL_Texture* loadTexture(const char* filepath, SDL_Renderer* renderer);
         void render(SDL_Renderer *renderer, SDL_Point camera);
@@ -85,4 +87,8 @@ class World {
         SDL_Texture* _smallrockTexture;
         SDL_Texture* _rockTexture;
         SDL_Texture* _bigRockTexture;
+
+        SDL_Texture* _smallSandRockTexture;
+        SDL_Texture* _sandRockTexture;
+        SDL_Texture* _bigSandRockTexture;
 };

@@ -97,6 +97,10 @@ void Window::moveCamera(int x, int y) {
     _camera.y += y;
 }
 
+void Window::zoomCamera(int zoom) {
+  std::cout << "essaye de zommer" << std::endl;
+}
+
 
 void Window::clearWindow() {
   SDL_SetRenderDrawColor(_renderer, 21, 21, 21, 255);
